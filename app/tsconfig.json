@@ -22,7 +22,7 @@
     "typeRoots": [
       "./node_modules/@types"
     ],
-    "outDir": "../cdk-backend/lambda"
+    "outDir": "../cdk-infrastructure/lambda"
   },
   "exclude": [
     "test"
