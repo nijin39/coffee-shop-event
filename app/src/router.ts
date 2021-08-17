@@ -1,4 +1,3 @@
-No lines are selected.
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import {DivisionController} from "./division/interface/division-controller";
 import { LeagueScheduleController } from "./leagueSchedule/interface/leagueSchedule-controller";
