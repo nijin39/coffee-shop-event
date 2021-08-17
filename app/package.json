@@ -1,0 +1,20 @@
+{
+  "name": "coffee-shop-app",
+  "version": "1.0.0",
+  "description": "Sample Project For Coffee Shop Event",
+  "main": "index.js",
+  "scripts": {
+    "build": "rm -rf ../cdk-infrastructure/lambda && tsc",
+    "watch": "tsc -w",
+    "test": "mocha --require ts-node/register ./test/**/*.spec.ts",
+    "coverage": "npx nyc --reporter=text --reporter=html npm run test",
+    "cdk": "cdk",
+    "api": "rm -rf ../cdk-infrastructure/lambda && tsc && cd ../cdk-infrastructure && sam-beta-cdk local start-api --host localhost --port 3001 --profile ddb-local --docker-network local-api-network"
+  },
+  "repository": {
+    "type": "git",
+    "url": "codecommit://Coffee-Shop-Event"
+  },
+  "author": "",
+  "license": "ISC"
+}
