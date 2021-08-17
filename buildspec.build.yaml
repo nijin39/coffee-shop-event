@@ -1,0 +1,32 @@
+version: 0.2
+env:
+  variables:
+    DIST_FOLDER: "dist"
+    BUILD_ENV: "dev"
+phases:
+  install:
+    runtime-versions:
+      nodejs: 12
+  pre_build:
+    commands:
+      - echo "Install dependencies"
+      - cd app 
+      - npm install
+      - npm run build
+      - cd ../cdk-infrastructure
+      - npm install
+      - npm run build
+  build:
+    commands:
+      - export AWS_BRANCH=$BRANCH_NAME
+      - export BACKEND_ACCOUNT_ID=$BACKEND_ACCOUNT_ID
+      - export APP_NAME=$APP_NAME
+      - npx cdk deploy -v --all --require-approval=never -o ./cdk.out --outputs-file cdk-exports.json
+      - cat cdk-exports.json
+      - ls
+artifacts:
+  files:
+    - cdk-infrastructure/cdk.out/*
+    # - sample-transformed.yaml
+    # - cdk-backend/sample-configuration-dev.json
+    # - cdk-backend/sample-configuration-prod.json
