@@ -24,6 +24,6 @@ const props = {
 }
 
 const app = new cdk.App();
-new CdkBackendStack(app, 'FrequencyApp-stack-' + userBranch, {...props});
+new CdkBackendStack(app, 'CoffeeShopEventApp-stack-' + userBranch, {...props});
 
 app.synth();
