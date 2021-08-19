@@ -28,8 +28,9 @@
     "@aws-cdk/aws-dynamodb": "1.108.1",
     "@aws-cdk/aws-lambda": "1.108.1",
     "@aws-cdk/core": "1.108.1",
-    "aws-sdk": "^2.923.0",
     "@types/aws-lambda": "^8.10.77",
+    "aws-lambda-router": "^0.11.0",
+    "aws-sdk": "^2.923.0",
     "cdk-assume-role-credential-plugin": "^1.2.3"
   },
   "repository": {
