@@ -2,6 +2,9 @@ import { Construct, Duration, Stack } from "@aws-cdk/core";
 import { MyStackProps } from './stack-types';
 import * as lambda from '@aws-cdk/aws-lambda';
 import * as apigw from '@aws-cdk/aws-apigateway';
+import {NodejsFunction} from "@aws-cdk/aws-lambda-nodejs";
+import * as path from "path";
+import {LambdaRestApi} from "@aws-cdk/aws-apigateway";
 
 export class CdkBackendStack extends Stack {
 
@@ -11,15 +14,21 @@ export class CdkBackendStack extends Stack {
 
     if(props && props.UserBranch) {
       try {
-        const router = new lambda.Function(this, 'RouteHandler', {
+        const lambdaFunction = new NodejsFunction(this, 'RouteHandler', {
           runtime: lambda.Runtime.NODEJS_12_X,
-          code: lambda.Code.fromAsset('lambda'),
-          handler: 'app.lambdaHandler',
-          timeout: Duration.minutes(1)
+          handler: 'lambdaHandler',
+          entry: path.join(__dirname, `/../src/coffee-shop-event/app.ts`),
+          timeout: Duration.minutes(1),
+          bundling: {
+            minify: true,
+            externalModules: ['aws-sdk'],
+          }
         });
-        new apigw.LambdaRestApi(this, 'CoffeeShopEvent-' + props.UserBranch, {
-          handler: router
+
+        const RestAPI = new LambdaRestApi(this, 'FrontAPI', {
+          handler: lambdaFunction
         });
+
       } catch (error) {
         throw error;
       } finally {
