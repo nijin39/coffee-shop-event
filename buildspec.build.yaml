@@ -10,10 +10,7 @@ phases:
   pre_build:
     commands:
       - echo "Install dependencies"
-      - cd app 
-      - npm install
-      - npm run build
-      - cd ../cdk-infrastructure
+      - cd cdk-infrastructure
       - npm install
       - npm run build
   build:
