@@ -20,7 +20,7 @@ phases:
       - export APP_NAME=$APP_NAME
       - npx cdk deploy -v --all --require-approval=never -o ./cdk.out --outputs-file cdk-exports.json
       - cat cdk-exports.json
-      - ls
+      - ls -al ./lib
 artifacts:
   files:
     - cdk-infrastructure/cdk.out/*

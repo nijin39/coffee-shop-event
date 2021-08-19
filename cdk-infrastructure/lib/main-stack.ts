@@ -17,7 +17,7 @@ export class CdkBackendStack extends Stack {
         const lambdaFunction = new NodejsFunction(this, 'RouteHandler', {
           runtime: lambda.Runtime.NODEJS_12_X,
           handler: 'lambdaHandler',
-          entry: path.join(__dirname, `/../src/coffee-shop-event/app.ts`),
+          entry: 'src/coffee-shop-event/app.ts',
           timeout: Duration.minutes(1),
           bundling: {
             minify: true,
