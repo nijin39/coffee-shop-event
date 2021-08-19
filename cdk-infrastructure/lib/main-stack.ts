@@ -17,7 +17,7 @@ export class CdkBackendStack extends Stack {
           handler: 'app.lambdaHandler',
           timeout: Duration.minutes(1)
         });
-        new apigw.LambdaRestApi(this, 'Endpoint-' + props.UserBranch, {
+        new apigw.LambdaRestApi(this, 'CoffeeShopEvent-' + props.UserBranch, {
           handler: router
         });
       } catch (error) {
