@@ -18,7 +18,7 @@ phases:
       - npm run build
   build:
     commands:
-      - export AWS_BRANCH=$BRANCH_NAME
+      - export AWS_BRANCH=$BRANCH_NAME 
       - export BACKEND_ACCOUNT_ID=$BACKEND_ACCOUNT_ID
       - export APP_NAME=$APP_NAME
       - npx cdk deploy -v --all --require-approval=never -o ./cdk.out --outputs-file cdk-exports.json
