@@ -32,6 +32,7 @@
     "@aws-cdk/core": "^1.119.0",
     "@types/aws-lambda": "^8.10.82",
     "aws-lambda-router": "^0.11.0",
+    "cdk-assume-role-credential-plugin": "^1.4.0",
     "parcel-bundler": "^1.12.5",
     "prettier": "^2.3.2",
     "source-map-support": "^0.5.19"
