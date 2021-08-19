@@ -14,7 +14,7 @@ export class CdkBackendStack extends Stack {
         const router = new lambda.Function(this, 'RouteHandler', {
           runtime: lambda.Runtime.NODEJS_12_X,
           code: lambda.Code.fromAsset('lambda'),
-          handler: 'router.lambdaHandler',
+          handler: 'app.lambdaHandler',
           timeout: Duration.minutes(1)
         });
         new apigw.LambdaRestApi(this, 'Endpoint-' + props.UserBranch, {
