@@ -1,0 +1,19 @@
+{
+  "name": "coffee-shop-event",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "jest",
+    "cdk": "cdk",
+    "type-check": "tsc --project tsconfig.json --pretty --noEmit",
+    "lint": "eslint . --ext js,jsx,ts,tsx --fix"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-lambda-router": "^0.11.0"
+  }
+}
