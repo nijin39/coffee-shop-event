@@ -14,10 +14,11 @@ export class CdkBackendStack extends Stack {
 
     if(props && props.UserBranch) {
       try {
+
         const lambdaFunction = new lambda.Function(this, 'RouteHandler', {
           runtime: lambda.Runtime.NODEJS_12_X,
           handler: 'src/coffee-shop-event/app.lambdaHandler',
-          code: lambda.Code.fromAsset(path.join("./cdk-infrastructure/")),
+          code: lambda.Code.fromAsset(path.join("../cdk-infrastructure/")),
         });
 
         const RestAPI = new LambdaRestApi(this, 'FrontAPI', {
