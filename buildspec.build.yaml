@@ -13,8 +13,8 @@ phases:
       - cd ./src/coffee-shop-event
       - npm install
       - npm run build
-      # - cd ../../
-      # - npm install
+      - cd ../../
+      - ls -al
       # - npm run build
   build:
     commands:
