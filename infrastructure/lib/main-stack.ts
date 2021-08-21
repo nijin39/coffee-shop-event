@@ -17,7 +17,7 @@ export class CdkBackendStack extends Stack {
         const lambdaFunction = new lambda.Function(this, 'RouteHandler', {
           runtime: lambda.Runtime.NODEJS_12_X,
           handler: 'src/coffee-shop-event/app.lambdaHandler',
-          code: lambda.Code.fromAsset(path.join("../../src/coffee-shop-event/")),
+          code: lambda.Code.fromAsset(path.join("../src/coffee-shop-event/")),
         });
 
         const RestAPI = new LambdaRestApi(this, 'FrontAPI', {
