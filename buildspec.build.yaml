@@ -13,7 +13,7 @@ phases:
       - cd ./src/coffee-shop-event
       - npm install
       - npm run build
-      - cd ../../
+      - cd ../../infrastructure/
       - npm install
       - npm run build
   build:

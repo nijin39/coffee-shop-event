@@ -2,7 +2,6 @@ import { Construct, Duration, Stack } from "@aws-cdk/core";
 import { MyStackProps } from './stack-types';
 import * as lambda from '@aws-cdk/aws-lambda';
 import * as apigw from '@aws-cdk/aws-apigateway';
-import {NodejsFunction} from "@aws-cdk/aws-lambda-nodejs";
 import * as path from "path";
 import {LambdaRestApi} from "@aws-cdk/aws-apigateway";
 
@@ -18,7 +17,7 @@ export class CdkBackendStack extends Stack {
         const lambdaFunction = new lambda.Function(this, 'RouteHandler', {
           runtime: lambda.Runtime.NODEJS_12_X,
           handler: 'src/coffee-shop-event/app.lambdaHandler',
-          code: lambda.Code.fromAsset(path.join("./src/coffee-shop-event/")),
+          code: lambda.Code.fromAsset(path.join("../../src/coffee-shop-event/")),
         });
 
         const RestAPI = new LambdaRestApi(this, 'FrontAPI', {
