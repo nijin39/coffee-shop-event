@@ -12,8 +12,7 @@ phases:
       - echo "Install dependencies"
       - cd ./src/coffee-shop-event
       - npm install
-      - ls -al
-      # - npm run build
+      - npm run build
       # - cd ../../
       # - ls -al
       # - npm run build
