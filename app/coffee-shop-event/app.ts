@@ -1,7 +1,7 @@
 import * as router from 'aws-lambda-router'
 import {Context} from "aws-lambda";
 import {RouterEvent} from "aws-lambda-router";
-
+import { BarcodeController } from "./ui/barcode/BarcodeController";
 export const lambdaHandler: <TContext extends Context>(event: RouterEvent, context: TContext) => Promise<any> = router.handler({
     proxyIntegration: {
         routes: [
@@ -9,7 +9,8 @@ export const lambdaHandler: <TContext extends Context>(event: RouterEvent, conte
                 path: '/frequency/{userId}/barcode',
                 method: 'POST',
                 action: (request, context) => {
-                    return "You called me with: " + request.paths?.userId;
+                    const barcontroller:BarcodeController = new BarcodeController();
+                    return "You called me with: " + barcontroller.getBarcode(request);
                 }
             },
             {
