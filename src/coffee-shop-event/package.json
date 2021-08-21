@@ -17,5 +17,8 @@
     "aws-lambda-router": "^0.11.0",
     "ts-node": "^10.2.1",
     "typescript": "^4.3.5"
+  },
+  "devDependencies": {
+    "@types/node": "^16.7.1"
   }
 }
