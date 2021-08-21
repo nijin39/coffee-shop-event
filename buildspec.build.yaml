@@ -13,9 +13,9 @@ phases:
       - cd ./src/coffee-shop-event
       - npm install
       - npm run build
-      - cd ../../
-      - npm install
-      - npm run build
+      # - cd ../../
+      # - npm install
+      # - npm run build
   build:
     commands:
       - export AWS_BRANCH=$BRANCH_NAME 
