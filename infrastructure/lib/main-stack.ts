@@ -1,7 +1,6 @@
 import { Construct, Duration, Stack } from "@aws-cdk/core";
 import { MyStackProps } from './stack-types';
 import * as lambda from '@aws-cdk/aws-lambda';
-import * as apigw from '@aws-cdk/aws-apigateway';
 import * as path from "path";
 import {LambdaRestApi} from "@aws-cdk/aws-apigateway";
 
