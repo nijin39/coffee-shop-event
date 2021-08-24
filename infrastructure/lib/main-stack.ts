@@ -3,6 +3,7 @@ import { MyStackProps } from './stack-types';
 import * as lambda from '@aws-cdk/aws-lambda';
 import * as path from "path";
 import {LambdaRestApi} from "@aws-cdk/aws-apigateway";
+import * as dynamodb from '@aws-cdk/aws-dynamodb';
 
 export class CdkBackendStack extends Stack {
 
@@ -12,7 +13,6 @@ export class CdkBackendStack extends Stack {
 
     if(props && props.UserBranch) {
       try {
-
         const lambdaFunction = new lambda.Function(this, 'RouteHandler', {
           runtime: lambda.Runtime.NODEJS_12_X,
           handler: 'app/coffee-shop-event/app.lambdaHandler',
@@ -22,6 +22,13 @@ export class CdkBackendStack extends Stack {
         const RestAPI = new LambdaRestApi(this, 'CoffeeEventAPIS', {
           handler: lambdaFunction
         });
+
+        const customerTable = new dynamodb.Table(this, 'CustomerTable', {
+          tableName: 'CustomerTable',
+          partitionKey: { name: 'customerId', type: dynamodb.AttributeType.STRING }
+        });
+
+        customerTable.grant(lambdaFunction, 'dynamodb:GetItem');
 
       } catch (error) {
         throw error;
