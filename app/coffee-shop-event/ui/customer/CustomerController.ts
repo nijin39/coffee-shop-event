@@ -27,7 +27,17 @@ export class CustomerController {
                 console.log(error);
                 return new LambdaResponse(500, "GetItem", JSON.stringify(error));
             });
+        return result;
+    }
 
+    async getGiftCount(customerId: string | undefined): Promise<LambdaResponse> {
+        const result = await this.customerService.getGiftCount(customerId)
+            .then(giftCount => {
+                return new LambdaResponse(200, "GetItem", String(giftCount));
+            }).catch(error => {
+                console.log(error);
+                return new LambdaResponse(500, "GetItem", JSON.stringify(error));
+            });
         return result;
     }
 
@@ -43,5 +53,4 @@ export class CustomerController {
 
     return result;
     }
-
 }

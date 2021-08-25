@@ -52,6 +52,14 @@ export const lambdaHandler: <TContext extends Context>(event: RouterEvent, conte
                 }
             },
             {
+                path: '/customer/{customerId}/gift',
+                method: 'GET',
+                action: async (request, context) => {
+                    const response:LambdaResponse = await customerController.getGiftCount( request.paths?.customerId );
+                    return response as ProxyIntegrationResult;
+                }
+            },
+            {
                 path: '/customer',
                 method: 'POST',
                 action: async (request, context) => {

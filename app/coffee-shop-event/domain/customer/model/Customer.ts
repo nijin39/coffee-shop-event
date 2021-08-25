@@ -1,6 +1,9 @@
 import CreateCustomerCommand from "../command/CreateCustomerCommand";
 import { v4 as uuidv4 } from 'uuid';
 
+const MISSON:number = 3;
+const NORMAL:number = 10;
+
 export class Customer {
     customerId: string; //Partition key
     nickName: string;
@@ -20,5 +23,16 @@ export class Customer {
 
     addNormalProductCount() {
         this.normalProductCount = this.normalProductCount + 1;
+    }
+
+    giftSimulation():number {
+        const missionQuotient = this.missionProductCount / MISSON;
+        const normalQuotient = this.normalProductCount / NORMAL;
+
+        if( missionQuotient >= normalQuotient ) {
+            return normalQuotient;
+        } else {
+            return missionQuotient;
+        }
     }
 }

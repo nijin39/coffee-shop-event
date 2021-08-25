@@ -24,9 +24,13 @@ export class CustomerService {
         return customer;
     }
 
+    async getGiftCount(customerId: string | undefined): Promise<number> {
+        const customer: Customer = await this.customerRepository.selectCustomerInfo(customerId!);
+        return customer.giftSimulation();
+    }
+
     async createCustomer(createCustomerCommand: CreateCustomerCommand): Promise<Customer> {
         const customer: Customer = new Customer(createCustomerCommand);
         return await this.customerRepository.save(customer);
-        //return await this.customerRepository.createCustomer(createCustomerCommand);
     }
 }
