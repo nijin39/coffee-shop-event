@@ -31,8 +31,9 @@ export const lambdaHandler: <TContext extends Context>(event: RouterEvent, conte
             {
                 path: '/frequency/{customerId}/barcode',
                 method: 'DELETE',
-                action: (request, context) => {
-                    return "You called me with: " + request.paths?.userId;
+                action: async (request, context) => {
+                    const response:LambdaResponse = await barcodeController.deleteBarcode( request.paths?.customerId );
+                    return response as ProxyIntegrationResult;
                 }
             },
             {

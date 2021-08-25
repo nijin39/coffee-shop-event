@@ -1,9 +1,9 @@
 import { BarcodeService } from "../../application/barcode/CustomerService";
 import CreateBarcodeCommand from "../../domain/barcode/command/CreateBarcodeCommand";
+import DeleteBarcodeCommand from "../../domain/barcode/command/DeleteBarcodeCommand";
 import LambdaResponse from "../../util/LambdaResponse";
 
 export class BarcodeController {
-
     private static instance: BarcodeController;
     private barcodeService: BarcodeService;
 
@@ -38,6 +38,23 @@ export class BarcodeController {
         }
 
         const result = await this.barcodeService.createBarcode(new CreateBarcodeCommand(customerId!))
+            .then(customer => {
+                return new LambdaResponse(200, "GetItem", JSON.stringify(customer));
+            }).catch(error => {
+                console.log(error);
+                return new LambdaResponse(500, "GetItem", JSON.stringify(error));
+            });
+
+        return result;
+    }
+
+    async deleteBarcode(customerId: string | undefined): Promise<LambdaResponse> {
+        if (customerId !== undefined) {
+            //TODO Exception
+            console.log("Error");
+        }
+
+        const result = await this.barcodeService.deleteBarcode(new DeleteBarcodeCommand(customerId!))
             .then(customer => {
                 return new LambdaResponse(200, "GetItem", JSON.stringify(customer));
             }).catch(error => {

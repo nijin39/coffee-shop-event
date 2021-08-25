@@ -1,10 +1,10 @@
 import CreateBarcodeCommand from "../../domain/barcode/command/CreateBarcodeCommand";
+import DeleteBarcodeCommand from "../../domain/barcode/command/DeleteBarcodeCommand";
 import { Barcode } from "../../domain/barcode/model/Barcode";
 import { BarcodeRepository } from "../../domain/barcode/service/BarcodeRepository";
 import BarcodeDDBRepository from "../../infra/barcode/BarcodeDDBRepository";
 
 export class BarcodeService {
-
     private static instance: BarcodeService;
     private barcodeRepository: BarcodeRepository;
 
@@ -30,6 +30,11 @@ export class BarcodeService {
 
     async createBarcode(createBarcodeCommand: CreateBarcodeCommand): Promise<Barcode> {
         const barcode:Barcode = await this.barcodeRepository.createBarcode(createBarcodeCommand);
+        return barcode;
+    }
+
+    async deleteBarcode(deleteBarcodeCommand: DeleteBarcodeCommand) {
+        const barcode:Barcode = await this.barcodeRepository.deleteBarcode(deleteBarcodeCommand);
         return barcode;
     }
 }
