@@ -34,12 +34,11 @@ class CouponDDBRepository implements CustomerRepository {
         const param: any = {
             TableName: "CustomerTable",
             Key: {
-                customerId: 'C000001'
+                customerId: customerId
             }
         }
 
         const result = await dynamoDbClient.get(param).promise();
-        console.log("Query Result :", JSON.stringify(result));
         return result.Item as Customer;
     }
 
