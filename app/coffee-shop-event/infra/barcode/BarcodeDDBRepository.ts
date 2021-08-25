@@ -23,7 +23,7 @@ if (process.env.AWS_SAM_LOCAL) {
 }
 
 const dynamoDbClient = new AWS.DynamoDB.DocumentClient()
-// const CouponTable = String(process.env.CouponTable)
+const CustomerTable = String(process.env.CUSTOMER_TABLE)
 
 class BarcodeDDBRepository implements BarcodeRepository {
     private static instance: BarcodeDDBRepository;
@@ -41,7 +41,7 @@ class BarcodeDDBRepository implements BarcodeRepository {
 
     async selectBarcodeInfo(customerId: string): Promise<Barcode> {
         const param = {
-            TableName: "CustomerTable",
+            TableName: CustomerTable,
             Key: {
                 customerId: customerId,
                 SK: 'barcode'

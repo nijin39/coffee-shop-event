@@ -23,7 +23,7 @@ if (process.env.AWS_SAM_LOCAL) {
 }
 
 const dynamoDbClient = new AWS.DynamoDB.DocumentClient()
-const CouponTable = String(process.env.CouponTable)
+const CustomerTable = String(process.env.CUSTOMER_TABLE)
 
 class CouponDDBRepository implements CustomerRepository {
     private static instance: CouponDDBRepository;
@@ -41,7 +41,7 @@ class CouponDDBRepository implements CustomerRepository {
 
     async selectCustomerInfo(customerId: string): Promise<Customer> {
         const param: any = {
-            TableName: "CustomerTable",
+            TableName: CustomerTable,
             Key: {
                 customerId: customerId,
                 SK: 'nickName'
@@ -55,7 +55,7 @@ class CouponDDBRepository implements CustomerRepository {
     async createCustomer(createCustomerCommand: CreateCustomerCommand): Promise<Customer> {
         const customerId = uuidv4();
         const param = {
-            TableName: 'CustomerTable',
+            TableName: CustomerTable,
             Item: {
                 customerId: customerId,
                 SK: 'nickName',
