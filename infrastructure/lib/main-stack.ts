@@ -31,19 +31,25 @@ export class CdkBackendStack extends Stack {
           sortKey: { name: 'SK', type: dynamodb.AttributeType.STRING }
         });
 
+        lambdaFunction.addEnvironment('CUSTOMER_TABLE', customerTable.tableName);
+
+        const orderLambdaFunction = new lambda.Function(this, 'OrderHandler', {
+          runtime: lambda.Runtime.NODEJS_12_X,
+          handler: 'app/coffee-shop-event/sqs.lambdaHandler',
+          code: lambda.Code.fromAsset(path.join("../app/coffee-shop-event/")),
+        });
+
         const queue = new sqs.Queue(this, 'OrderQueue', {
           visibilityTimeout: Duration.seconds(30),    // default,
           receiveMessageWaitTime: Duration.seconds(20) // default
         });
 
-        lambdaFunction.addEventSource(new SqsEventSource(queue, {
+        orderLambdaFunction.addEventSource(new SqsEventSource(queue, {
           batchSize: 10, // default
           maxBatchingWindow: Duration.minutes(5),
         }));
 
-        lambdaFunction.addEnvironment('CUSTOMER_TABLE', customerTable.tableName);
-        lambdaFunction.addEnvironment('ORDER_QUEUE', queue.queueArn);
-
+        orderLambdaFunction.addEnvironment('ORDER_QUEUE', queue.queueArn);
         customerTable.grantReadWriteData(lambdaFunction);
 
       } catch (error) {
