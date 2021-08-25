@@ -4,6 +4,8 @@ import * as lambda from '@aws-cdk/aws-lambda';
 import * as path from "path";
 import {LambdaRestApi} from "@aws-cdk/aws-apigateway";
 import * as dynamodb from '@aws-cdk/aws-dynamodb';
+import * as sqs from '@aws-cdk/aws-sqs';
+import { SqsEventSource } from '@aws-cdk/aws-lambda-event-sources';
 
 export class CdkBackendStack extends Stack {
 
@@ -29,7 +31,18 @@ export class CdkBackendStack extends Stack {
           sortKey: { name: 'SK', type: dynamodb.AttributeType.STRING }
         });
 
+        const queue = new sqs.Queue(this, 'OrderQueue', {
+          visibilityTimeout: Duration.seconds(30),    // default,
+          receiveMessageWaitTime: Duration.seconds(20) // default
+        });
+
+        lambdaFunction.addEventSource(new SqsEventSource(queue, {
+          batchSize: 10, // default
+          maxBatchingWindow: Duration.minutes(5),
+        }));
+
         lambdaFunction.addEnvironment('CUSTOMER_TABLE', customerTable.tableName);
+        lambdaFunction.addEnvironment('ORDER_QUEUE', queue.queueArn);
 
         customerTable.grantReadWriteData(lambdaFunction);
 
