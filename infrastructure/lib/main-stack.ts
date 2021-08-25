@@ -56,10 +56,11 @@ export class CdkBackendStack extends Stack {
           receiveMessageWaitTime: Duration.seconds(20) // default
         });
 
-        orderLambdaFunction.addEventSource(new SqsEventSource(queue, {
-          batchSize: 10, // default
-          maxBatchingWindow: Duration.minutes(5),
-        }));
+        // orderLambdaFunction.addEventSource(new SqsEventSource(queue, {
+        //   batchSize: 10, // default
+        //   maxBatchingWindow: Duration.minutes(5),
+        // }));
+        orderLambdaFunction.addEventSource(new SqsEventSource(queue));
 
         orderLambdaFunction.addEnvironment('ORDER_QUEUE', queue.queueArn);
 
