@@ -1,4 +1,3 @@
-import {ProxyIntegrationEvent} from "aws-lambda-router/lib/proxyIntegration";
 import { BarcodeService } from "../../application/barcode/CustomerService";
 import CreateBarcodeCommand from "../../domain/barcode/command/CreateBarcodeCommand";
 import LambdaResponse from "../../util/LambdaResponse";
@@ -19,9 +18,16 @@ export class BarcodeController {
         return this.instance;
       }
 
-    getBarcode(event: ProxyIntegrationEvent): string {
-        console.info("DivisionController.listDivisionMenus")
-        return "abc";
+    async getBarcodeInfo(customerId: string | undefined): Promise<LambdaResponse> {
+        const result = await this.barcodeService.getBarcodeInfo(customerId)
+            .then(barcode => {
+                return new LambdaResponse(200, "GetItem", JSON.stringify(barcode));
+            }).catch(error => {
+                console.log(error);
+                return new LambdaResponse(500, "GetItem", JSON.stringify(error));
+            });
+
+        return result;
     }
 
     async createBarcode(customerId: string | undefined): Promise<LambdaResponse> {
