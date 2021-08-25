@@ -1,3 +1,4 @@
+import CreateCustomerCommand from "../../domain/customer/command/CreateCustomerCommand";
 import { Customer } from "../../domain/customer/model/Customer";
 import { CustomerRepository } from "../../domain/customer/service/CustomerRepository";
 import CustomerDDBRepository from "../../infra/customer/CustomerDDBRepository";
@@ -25,5 +26,10 @@ export class CustomerService {
             const customer:Customer = await this.customerRepository.selectCustomerInfo(customerId);
             return customer;
         }
+    }
+
+    async createCustomer(createCustomerCommand: CreateCustomerCommand): Promise<Customer> {
+        const customer:Customer = await this.customerRepository.createCustomer(createCustomerCommand);
+        return customer;
     }
 }

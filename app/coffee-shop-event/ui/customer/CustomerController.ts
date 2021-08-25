@@ -33,8 +33,16 @@ export class CustomerController {
     }
 
     async createCustomerInfo(request: ProxyIntegrationEvent<CreateCustomerCommand>): Promise<LambdaResponse> {
-        const createCustomerCommand = request.body;
-        return new LambdaResponse(200, "GetItem", JSON.stringify(createCustomerCommand));
+        const createCustomerCommand:CreateCustomerCommand = request.body;
+        const result = await this.customerService.createCustomer(createCustomerCommand)
+        .then(customer => {
+            return new LambdaResponse(200, "GetItem", JSON.stringify(customer));
+        }).catch(error => {
+            console.log(error);
+            return new LambdaResponse(500, "GetItem", JSON.stringify(error));
+        });
+
+    return result;
     }
 
 }
