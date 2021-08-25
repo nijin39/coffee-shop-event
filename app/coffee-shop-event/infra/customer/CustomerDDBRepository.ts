@@ -41,7 +41,7 @@ class CouponDDBRepository implements CustomerRepository {
         }
 
         const result = await dynamoDbClient.get(param).promise();
-
+        console.log("Query Result :", JSON.stringify(result));
         return result.Item as Customer;
     }
 
