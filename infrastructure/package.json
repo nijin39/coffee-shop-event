@@ -10,7 +10,7 @@
     "test": "jest",
     "cdk": "cdk",
     "type-check": "tsc --project tsconfig.json --pretty --noEmit",
-    "lint": "eslint . --ext js,jsx,ts,tsx --fix"
+    "lint": "eslint .. --ext js,jsx,ts,tsx --fix"
   },
   "devDependencies": {
     "@aws-cdk/assert": "^1.36.1",
@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@aws-cdk/aws-apigateway": "^1.119.0",
+    "@aws-cdk/aws-dynamodb": "^1.119.0",
     "@aws-cdk/aws-iam": "^1.119.0",
     "@aws-cdk/aws-lambda": "^1.119.0",
     "@aws-cdk/aws-lambda-event-sources": "^1.119.0",

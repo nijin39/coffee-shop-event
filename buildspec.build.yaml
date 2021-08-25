@@ -10,10 +10,10 @@ phases:
   pre_build:
     commands:
       - echo "Install dependencies"
-      - cd ./src/coffee-shop-event
+      - cd ./app/coffee-shop-event
       - npm install
       - npm run build
-      - cd ../../
+      - cd ../../infrastructure/
       - npm install
       - npm run build
   build:
