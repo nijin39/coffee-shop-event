@@ -28,13 +28,14 @@ export class StickerService {
         const stickerHistory: StickerHistory = new StickerHistory(stickerAddCommand);
         try {
             const savedStickerHistory:StickerHistory = await this.stickerRepository.save(stickerHistory);
-        } catch (error) {
             //TODO Sticker Delete
             if( stickerAddCommand.orderType === "add") {
                 await this.customerSummaryUpdater.addSummary(stickerAddCommand);
             } else {
                 await this.customerSummaryUpdater.subSummary(stickerAddCommand);
             }
+        } catch (error) {
+            console.error("Error Sticker Service :", error);
         } finally {
             return stickerHistory;
         }
