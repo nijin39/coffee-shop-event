@@ -1,7 +1,9 @@
 import * as AWS from 'aws-sdk';
 import { ServiceConfigurationOptions } from 'aws-sdk/lib/service';
+import CreateCustomerCommand from '../../domain/customer/command/CreateCustomerCommand';
 import { Customer } from '../../domain/customer/model/Customer';
 import { CustomerRepository } from '../../domain/customer/service/CustomerRepository';
+import { v4 as uuidv4 } from 'uuid';
 
 const serviceLocalConfigOptions: ServiceConfigurationOptions = {
     region: 'ap-northeast-2',
@@ -30,6 +32,13 @@ class CouponDDBRepository implements CustomerRepository {
         CouponDDBRepository.instance = this;
     }
 
+    static get getInstance() {
+        if (!CouponDDBRepository.instance) {
+            CouponDDBRepository.instance = new CouponDDBRepository();
+        }
+        return this.instance;
+    }
+
     async selectCustomerInfo(customerId: string): Promise<Customer> {
         const param: any = {
             TableName: "CustomerTable",
@@ -42,11 +51,22 @@ class CouponDDBRepository implements CustomerRepository {
         return result.Item as Customer;
     }
 
-    static get getInstance() {
-        if (!CouponDDBRepository.instance) {
-            CouponDDBRepository.instance = new CouponDDBRepository();
+    async createCustomer(createCustomerCommand: CreateCustomerCommand): Promise<Customer> {
+        const customerId = uuidv4();
+        const param = {
+            TableName: 'CustomerTable',
+            Item: {
+                customerId: customerId,
+                nickName: createCustomerCommand.nickName
+            }
         }
-        return this.instance;
+
+        const result = await dynamoDbClient.put(param).promise();
+        
+        return Promise.resolve({
+            customerId: customerId,
+            nickName: createCustomerCommand.nickName
+        });
     }
 
     // async registeredCoupon(couponTargetInfo: CouponTarget, couponInfo: CouponInfo): Promise<CouponInfo> {
