@@ -1,7 +1,7 @@
 import * as AWS from 'aws-sdk';
 import { ServiceConfigurationOptions } from 'aws-sdk/lib/service';
-import { Customer } from '../../domain/customer/Customer';
-import { CustomerRepository } from '../../domain/customer/CustomerRepository';
+import { Customer } from '../../domain/customer/model/Customer';
+import { CustomerRepository } from '../../domain/customer/service/CustomerRepository';
 
 const serviceLocalConfigOptions: ServiceConfigurationOptions = {
     region: 'ap-northeast-2',

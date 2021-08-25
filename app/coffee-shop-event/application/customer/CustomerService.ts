@@ -1,5 +1,5 @@
-import { Customer } from "../../domain/customer/Customer";
-import { CustomerRepository } from "../../domain/customer/CustomerRepository";
+import { Customer } from "../../domain/customer/model/Customer";
+import { CustomerRepository } from "../../domain/customer/service/CustomerRepository";
 import CustomerDDBRepository from "../../infra/customer/CustomerDDBRepository";
 
 export class CustomerService {
