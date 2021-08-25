@@ -11,9 +11,9 @@ export const handler = router.handler({
             {
                 source: orderQueue,
                 action: (messages, context, records) =>
-                    messages.forEach(message => {
+                    messages.forEach(async message => {
                         console.log("MESSAGE :", JSON.stringify(message));
-                        //await stickerController.addStickerHistory(JSON.parse(message));
+                        await stickerController.addStickerHistory(JSON.parse(message));
                     })
             }
         ]
