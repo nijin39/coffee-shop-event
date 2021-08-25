@@ -1,9 +1,9 @@
 import { Header } from "aws-sdk/clients/mediastore";
 
 export default class LambdaResponse {
-    private statusCode: number;
-    private headers: string;
-    private body: string;
+    statusCode: number;
+    [header: string]: string | number | boolean;
+    body: string;
 
     constructor(statusCode: number, header: string, body: string) {
         this.statusCode = statusCode;

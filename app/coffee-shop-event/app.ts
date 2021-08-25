@@ -4,6 +4,7 @@ import {RouterEvent} from "aws-lambda-router";
 import { BarcodeController } from "./ui/barcode/BarcodeController";
 import { CustomerController } from './ui/customer/CustomerController';
 import LambdaResponse from './util/LambdaResponse';
+import { ProxyIntegrationResult } from 'aws-lambda-router/lib/proxyIntegration';
 
 const customerController = CustomerController.getInstance;
 
@@ -44,7 +45,7 @@ export const lambdaHandler: <TContext extends Context>(event: RouterEvent, conte
                 method: 'GET',
                 action: async (request, context) => {
                     const response:LambdaResponse = await customerController.getCustomerInfo( request.paths?.customerId );
-                    return JSON.stringify(response);
+                    return response as ProxyIntegrationResult;
                 }
             }
         ]
