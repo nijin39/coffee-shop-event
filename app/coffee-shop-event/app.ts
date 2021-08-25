@@ -4,6 +4,8 @@ import {RouterEvent} from "aws-lambda-router";
 import { BarcodeController } from "./ui/barcode/BarcodeController";
 import { CustomerController } from './ui/customer/CustomerController';
 
+const customerController = CustomerController.getInstance;
+
 export const lambdaHandler: <TContext extends Context>(event: RouterEvent, context: TContext) => Promise<any> = router.handler({
     proxyIntegration: {
         routes: [
@@ -40,7 +42,6 @@ export const lambdaHandler: <TContext extends Context>(event: RouterEvent, conte
                 path: '/customer/{customerId}',
                 method: 'GET',
                 action: (request, context) => {
-                    const customerController:CustomerController = new CustomerController();
                     return customerController.getCustomerInfo( request.paths?.customerId );
                 }
             }
