@@ -34,9 +34,7 @@ class CouponDDBRepository implements CustomerRepository {
         const param: any = {
             TableName: "CustomerTable",
             Key: {
-                "customerId": {
-                    "S": "C000001"
-                }
+                customerId: 'C000001'
             }
         }
 
