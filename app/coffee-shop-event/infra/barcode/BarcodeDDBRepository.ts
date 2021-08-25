@@ -57,7 +57,7 @@ class BarcodeDDBRepository implements BarcodeRepository {
         const barcode:string = uuidv4();
 
         const param = {
-            TableName: 'CustomerTable',
+            TableName: CustomerTable,
             Item: {
                 customerId: createCustomerCommand.customerId,
                 SK: 'barcode',
