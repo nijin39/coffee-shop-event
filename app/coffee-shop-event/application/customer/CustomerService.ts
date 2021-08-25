@@ -27,6 +27,7 @@ export class CustomerService {
     async getGiftCount(customerId: string | undefined): Promise<number> {
         const customer: Customer = await this.customerRepository.selectCustomerInfo(customerId!);
         const foundCustomer = Object.assign(Customer, customer);
+        console.log("FoundCustomer ", foundCustomer);
         return foundCustomer.giftSimulation();
     }
 
