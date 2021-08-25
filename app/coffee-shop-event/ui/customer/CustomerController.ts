@@ -1,6 +1,7 @@
 import { APIGatewayProxyEvent } from "aws-lambda";
 import { ProxyIntegrationEvent } from "aws-lambda-router/lib/proxyIntegration";
 import { CustomerService } from "../../application/customer/CustomerService";
+import CreateCustomerCommand from "../../domain/customer/command/CreateCustomerCommand";
 import LambdaResponse from "../../util/LambdaResponse";
 
 export class CustomerController {
@@ -30,4 +31,10 @@ export class CustomerController {
 
         return result;
     }
+
+    async createCustomerInfo(request: ProxyIntegrationEvent<CreateCustomerCommand>): Promise<LambdaResponse> {
+        const createCustomerCommand = request.body;
+        return new LambdaResponse(200, "GetItem", JSON.stringify(createCustomerCommand));
+    }
+
 }
