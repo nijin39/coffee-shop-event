@@ -49,6 +49,7 @@ export class CdkBackendStack extends Stack {
         });
 
         orderLambdaFunction.addEnvironment('STICKER_HISTORY_TABLE', stickerHistoryTable.tableName);
+        orderLambdaFunction.addEnvironment('CUSTOMER_TABLE', customerTable.tableName);
 
         // Order Queue
         const queue = new sqs.Queue(this, 'OrderQueue', {
