@@ -10,11 +10,18 @@ export const handler = router.handler({
         routes: [
             {
                 source: orderQueue,
-                action: (messages, context, records) =>
-                    messages.forEach(async message => {
-                        console.log("MESSAGE :", JSON.stringify(message));
+                action: async (messages, context, records) => {
+                    // const promises = messages.map(stickerController.addStickerHistory(JSON.parse(message)));
+                    // await Promise.all(promises);
+                    for ( const message of messages ) {
                         await stickerController.addStickerHistory(JSON.parse(message));
-                    })
+                    }
+                }
+
+                    // messages.forEach(async message => {
+                    //     console.log("MESSAGE :", JSON.stringify(message));
+                    //     await stickerController.addStickerHistory(JSON.parse(message));
+                    // })
             }
         ]
     }

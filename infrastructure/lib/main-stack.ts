@@ -66,6 +66,7 @@ export class CdkBackendStack extends Stack {
 
         // Grant
         customerTable.grantReadWriteData(lambdaFunction);
+        customerTable.grantReadWriteData(orderLambdaFunction);
         stickerHistoryTable.grantReadWriteData(orderLambdaFunction);
 
       } catch (error) {
