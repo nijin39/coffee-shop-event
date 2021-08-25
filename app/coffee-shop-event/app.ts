@@ -8,6 +8,7 @@ import { ProxyIntegrationEvent, ProxyIntegrationResult } from 'aws-lambda-router
 import CreateCustomerCommand from './domain/customer/command/CreateCustomerCommand';
 
 const customerController = CustomerController.getInstance;
+const barcodeController = BarcodeController.getInstance;
 
 export const lambdaHandler: <TContext extends Context>(event: RouterEvent, context: TContext) => Promise<any> = router.handler({
     proxyIntegration: {
@@ -15,9 +16,9 @@ export const lambdaHandler: <TContext extends Context>(event: RouterEvent, conte
             {
                 path: '/frequency/{customerId}/barcode',
                 method: 'POST',
-                action: (request, context) => {
-                    const barcontroller:BarcodeController = new BarcodeController();
-                    return "You called me with: " + barcontroller.getBarcode(request);
+                action: async (request, context) => {
+                    const response:LambdaResponse = await barcodeController.createBarcode(  request.paths?.customerId );
+                    return response as ProxyIntegrationResult;
                 }
             },
             {
