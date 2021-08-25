@@ -15,19 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "aws-lambda-router": "^0.11.0",
-<<<<<<< HEAD:src/coffee-shop-event/package.json
     "ts-node": "^10.2.1",
     "typescript": "^4.3.5"
-=======
-    "aws-sdk": "^2.974.0",
-    "moment": "^2.29.1",
-    "ts-node": "^10.2.1",
-    "typescript": "^4.3.5",
-    "uuid": "^8.3.2"
-  },
-  "devDependencies": {
-    "@types/node": "^16.7.1",
-    "@types/uuid": "^8.3.1"
->>>>>>> 5e4e2893e8ca33d17293a594e507cfcf0b923d0c:app/coffee-shop-event/package.json
   }
 }
