@@ -33,7 +33,7 @@ export class CustomerController {
     async getGiftCount(customerId: string | undefined): Promise<LambdaResponse> {
         const result = await this.customerService.getGiftCount(customerId)
             .then(giftCount => {
-                return new LambdaResponse(200, "GetItem", String(giftCount));
+                return new LambdaResponse(200, "GetItem", JSON.stringify({"GiftCount": giftCount}));
             }).catch(error => {
                 console.log(error);
                 return new LambdaResponse(500, "GetItem", JSON.stringify(error));
