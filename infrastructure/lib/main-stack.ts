@@ -24,10 +24,12 @@ export class CdkBackendStack extends Stack {
         });
 
         const customerTable = new dynamodb.Table(this, 'CustomerTable', {
-          tableName: 'CustomerTable',
+          tableName: 'CustomerTable' + props.UserBranch,
           partitionKey: { name: 'customerId', type: dynamodb.AttributeType.STRING },
           sortKey: { name: 'SK', type: dynamodb.AttributeType.STRING }
         });
+
+        lambdaFunction.addEnvironment('CUSTOMER_TABLE', customerTable.tableName);
 
         customerTable.grant(lambdaFunction,
            'dynamodb:GetItem',
