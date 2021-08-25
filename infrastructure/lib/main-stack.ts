@@ -15,6 +15,7 @@ export class CdkBackendStack extends Stack {
 
     if(props && props.UserBranch) {
       try {
+        // Lambda Function
         const lambdaFunction = new lambda.Function(this, 'RouteHandler', {
           runtime: lambda.Runtime.NODEJS_12_X,
           handler: 'app/coffee-shop-event/app.lambdaHandler',
@@ -35,7 +36,7 @@ export class CdkBackendStack extends Stack {
 
         const orderLambdaFunction = new lambda.Function(this, 'OrderHandler', {
           runtime: lambda.Runtime.NODEJS_12_X,
-          handler: 'app/coffee-shop-event/sqs.handler',
+          handler: 'app/coffee-shop-event/orderQueue.handler',
           code: lambda.Code.fromAsset(path.join("../app/coffee-shop-event/")),
         });
 
