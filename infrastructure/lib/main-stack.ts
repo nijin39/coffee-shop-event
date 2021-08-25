@@ -28,7 +28,9 @@ export class CdkBackendStack extends Stack {
           partitionKey: { name: 'customerId', type: dynamodb.AttributeType.STRING }
         });
 
-        customerTable.grant(lambdaFunction, 'dynamodb:GetItem');
+        customerTable.grant(lambdaFunction,
+           'dynamodb:GetItem',
+           'dynamodb:PutItem');
 
       } catch (error) {
         throw error;
