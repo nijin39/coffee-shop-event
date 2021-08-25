@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { BarcodeRepository } from '../../domain/barcode/service/BarcodeRepository';
 import CreateBarcodeCommand from '../../domain/barcode/command/CreateBarcodeCommand';
 import { Barcode } from '../../domain/barcode/model/Barcode';
+import DeleteBarcodeCommand from '../../domain/barcode/command/DeleteBarcodeCommand';
 
 const serviceLocalConfigOptions: ServiceConfigurationOptions = {
     region: 'ap-northeast-2',
@@ -72,6 +73,22 @@ class BarcodeDDBRepository implements BarcodeRepository {
             customerId: createCustomerCommand.customerId,
             barcode: barcode
         });
+    }
+
+    async deleteBarcode(deleteBarcodeCommand: DeleteBarcodeCommand): Promise<Barcode> {
+
+        const barcode:Barcode = await this.selectBarcodeInfo(deleteBarcodeCommand.customerId);
+
+        const param = {
+            TableName: CustomerTable,
+            Key: {
+                customerId: deleteBarcodeCommand.customerId,
+                SK: 'barcode'
+            }
+        }
+
+        const result = await dynamoDbClient.delete(param).promise();
+        return barcode;
     }
 
     // async registeredCoupon(couponTargetInfo: CouponTarget, couponInfo: CouponInfo): Promise<CouponInfo> {
