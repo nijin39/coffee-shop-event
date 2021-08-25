@@ -4,7 +4,8 @@ import {RouterEvent} from "aws-lambda-router";
 import { BarcodeController } from "./ui/barcode/BarcodeController";
 import { CustomerController } from './ui/customer/CustomerController';
 import LambdaResponse from './util/LambdaResponse';
-import { ProxyIntegrationResult } from 'aws-lambda-router/lib/proxyIntegration';
+import { ProxyIntegrationEvent, ProxyIntegrationResult } from 'aws-lambda-router/lib/proxyIntegration';
+import CreateCustomerCommand from './domain/customer/command/CreateCustomerCommand';
 
 const customerController = CustomerController.getInstance;
 
@@ -52,7 +53,7 @@ export const lambdaHandler: <TContext extends Context>(event: RouterEvent, conte
                 path: '/customer',
                 method: 'POST',
                 action: async (request, context) => {
-                    const response:LambdaResponse = await customerController.createCustomerInfo( request );
+                    const response:LambdaResponse = await customerController.createCustomerInfo( request as ProxyIntegrationEvent<CreateCustomerCommand> );
                     return response as ProxyIntegrationResult;
                 }
             }
