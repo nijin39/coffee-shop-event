@@ -62,7 +62,10 @@ export class CdkBackendStack extends Stack {
         }));
 
         orderLambdaFunction.addEnvironment('ORDER_QUEUE', queue.queueArn);
+
+        // Grant
         customerTable.grantReadWriteData(lambdaFunction);
+        stickerHistoryTable.grantReadWriteData(orderLambdaFunction);
 
       } catch (error) {
         throw error;
