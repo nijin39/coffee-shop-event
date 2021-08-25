@@ -35,7 +35,7 @@ export class CdkBackendStack extends Stack {
 
         const orderLambdaFunction = new lambda.Function(this, 'OrderHandler', {
           runtime: lambda.Runtime.NODEJS_12_X,
-          handler: 'app/coffee-shop-event/sqs.lambdaHandler',
+          handler: 'app/coffee-shop-event/sqs.handler',
           code: lambda.Code.fromAsset(path.join("../app/coffee-shop-event/")),
         });
 
