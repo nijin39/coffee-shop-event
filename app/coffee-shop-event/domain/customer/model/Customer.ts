@@ -26,8 +26,8 @@ export class Customer {
     }
 
     giftSimulation():number {
-        const missionQuotient = this.missionProductCount / MISSON;
-        const normalQuotient = this.normalProductCount / NORMAL;
+        const missionQuotient = Math.floor(this.missionProductCount / MISSON);
+        const normalQuotient = Math.floor(this.normalProductCount / NORMAL);
 
         if( missionQuotient >= normalQuotient ) {
             return normalQuotient;
