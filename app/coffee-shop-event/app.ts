@@ -3,6 +3,7 @@ import {Context} from "aws-lambda";
 import {RouterEvent} from "aws-lambda-router";
 import { BarcodeController } from "./ui/barcode/BarcodeController";
 import { CustomerController } from './ui/customer/CustomerController';
+import LambdaResponse from './util/LambdaResponse';
 
 const customerController = CustomerController.getInstance;
 
@@ -41,8 +42,9 @@ export const lambdaHandler: <TContext extends Context>(event: RouterEvent, conte
             {
                 path: '/customer/{customerId}',
                 method: 'GET',
-                action: (request, context) => {
-                    return customerController.getCustomerInfo( request.paths?.customerId );
+                action: async (request, context) => {
+                    const response:LambdaResponse = await customerController.getCustomerInfo( request.paths?.customerId );
+                    return JSON.stringify(response);
                 }
             }
         ]

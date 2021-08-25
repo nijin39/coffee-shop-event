@@ -19,8 +19,8 @@ export class CustomerController {
         return this.instance;
       }
 
-    getCustomerInfo(customerId: string | undefined): string {
-        this.customerService.getCustomerInfo(customerId)
+    async getCustomerInfo(customerId: string | undefined): Promise<LambdaResponse> {
+        const result = await this.customerService.getCustomerInfo(customerId)
             .then(customer => {
                 return new LambdaResponse(200, "GetItem", JSON.stringify(customer));
             }).catch(error => {
@@ -28,6 +28,6 @@ export class CustomerController {
                 return new LambdaResponse(500, "GetItem", JSON.stringify(error));
             });
 
-        return customerId ? customerId : "empty";
+        return result;
     }
 }

@@ -19,7 +19,6 @@ export class CustomerService {
     }
 
     async getCustomerInfo(customerId: string|undefined): Promise<Customer> {
-        console.log(customerId);
         if( customerId === undefined) {
             return new Customer("Empty", "Empty");
         } else {
