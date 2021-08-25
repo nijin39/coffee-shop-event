@@ -61,7 +61,8 @@ class BarcodeDDBRepository implements BarcodeRepository {
             Item: {
                 customerId: createCustomerCommand.customerId,
                 SK: 'barcode',
-                barcode: barcode
+                barcode: barcode,
+                timestamp: Date.now()
             }
         }
 
