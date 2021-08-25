@@ -17,8 +17,7 @@ export const lambdaHandler: <TContext extends Context>(event: RouterEvent, conte
                 path: '/frequency/{customerId}/barcode',
                 method: 'POST',
                 action: async (request, context) => {
-                    const response:LambdaResponse = await barcodeController.createBarcode(  request.paths?.customerId );
-                    return response as ProxyIntegrationResult;
+                    return await barcodeController.createBarcode(  request.paths?.customerId ) as ProxyIntegrationResult;
                 }
             },
             {

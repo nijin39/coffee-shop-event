@@ -59,7 +59,8 @@ class CouponDDBRepository implements CustomerRepository {
             Item: {
                 customerId: customerId,
                 SK: 'nickName',
-                nickName: createCustomerCommand.nickName
+                nickName: createCustomerCommand.nickName,
+                timestamp: Date.now() / 1000
             }
         }
 

@@ -1,4 +1,3 @@
-import { APIGatewayProxyEvent } from "aws-lambda";
 import { ProxyIntegrationEvent } from "aws-lambda-router/lib/proxyIntegration";
 import { CustomerService } from "../../application/customer/CustomerService";
 import CreateCustomerCommand from "../../domain/customer/command/CreateCustomerCommand";
