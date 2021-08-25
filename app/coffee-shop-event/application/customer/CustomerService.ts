@@ -1,6 +1,6 @@
 import CreateCustomerCommand from "../../domain/customer/command/CreateCustomerCommand";
-import { Customer } from "../../domain/customer/model/Customer";
-import { CustomerRepository } from "../../domain/customer/service/CustomerRepository";
+import {Customer} from "../../domain/customer/model/Customer";
+import {CustomerRepository} from "../../domain/customer/service/CustomerRepository";
 import CustomerDDBRepository from "../../infra/customer/CustomerDDBRepository";
 
 export class CustomerService {
@@ -19,17 +19,14 @@ export class CustomerService {
         return this.instance;
     }
 
-    async getCustomerInfo(customerId: string|undefined): Promise<Customer> {
-        if( customerId === undefined) {
-            return new Customer("Empty", "Empty");
-        } else {
-            const customer:Customer = await this.customerRepository.selectCustomerInfo(customerId);
-            return customer;
-        }
+    async getCustomerInfo(customerId: string | undefined): Promise<Customer> {
+        const customer: Customer = await this.customerRepository.selectCustomerInfo(customerId!);
+        return customer;
     }
 
     async createCustomer(createCustomerCommand: CreateCustomerCommand): Promise<Customer> {
-        const customer:Customer = await this.customerRepository.createCustomer(createCustomerCommand);
-        return customer;
+        const customer: Customer = new Customer(createCustomerCommand);
+        return await this.customerRepository.save(customer);
+        //return await this.customerRepository.createCustomer(createCustomerCommand);
     }
 }

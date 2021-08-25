@@ -1,9 +1,7 @@
 import * as AWS from 'aws-sdk';
 import { ServiceConfigurationOptions } from 'aws-sdk/lib/service';
-import CreateCustomerCommand from '../../domain/customer/command/CreateCustomerCommand';
 import { Customer } from '../../domain/customer/model/Customer';
 import { CustomerRepository } from '../../domain/customer/service/CustomerRepository';
-import { v4 as uuidv4 } from 'uuid';
 
 const serviceLocalConfigOptions: ServiceConfigurationOptions = {
     region: 'ap-northeast-2',
@@ -44,32 +42,26 @@ class CouponDDBRepository implements CustomerRepository {
             TableName: CustomerTable,
             Key: {
                 customerId: customerId,
-                SK: 'nickName'
+                SK: 'SUMMARY#'+customerId,
             }
         }
-
         const result = await dynamoDbClient.get(param).promise();
         return result.Item as Customer;
     }
 
-    async createCustomer(createCustomerCommand: CreateCustomerCommand): Promise<Customer> {
-        const customerId = uuidv4();
+    async save(customer: Customer): Promise<Customer> {
         const param = {
             TableName: CustomerTable,
             Item: {
-                customerId: customerId,
-                SK: 'nickName',
-                nickName: createCustomerCommand.nickName,
-                timestamp: Date.now()
+                customerId: customer.customerId,
+                nickName: customer.nickName,
+                SK: 'SUMMARY#'+customer.customerId,
+                missionProductCount: customer.missionProductCount,
+                normalProductCount: customer.normalProductCount
             }
         }
-
         const result = await dynamoDbClient.put(param).promise();
-        
-        return Promise.resolve({
-            customerId: customerId,
-            nickName: createCustomerCommand.nickName
-        });
+        return customer;
     }
 }
 
