@@ -1,7 +1,6 @@
 import { APIGatewayProxyEvent } from "aws-lambda";
 import { ProxyIntegrationEvent } from "aws-lambda-router/lib/proxyIntegration";
 import { CustomerService } from "../../application/customer/CustomerService";
-import { Customer } from "../../domain/customer/Customer";
 import LambdaResponse from "../../util/LambdaResponse";
 
 export class CustomerController {
