@@ -25,7 +25,8 @@ export class CdkBackendStack extends Stack {
 
         const customerTable = new dynamodb.Table(this, 'CustomerTable', {
           tableName: 'CustomerTable',
-          partitionKey: { name: 'customerId', type: dynamodb.AttributeType.STRING }
+          partitionKey: { name: 'customerId', type: dynamodb.AttributeType.STRING },
+          sortKey: { name: 'SK', type: dynamodb.AttributeType.STRING }
         });
 
         customerTable.grant(lambdaFunction,

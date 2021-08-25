@@ -1,9 +1,9 @@
 import * as AWS from 'aws-sdk';
 import { ServiceConfigurationOptions } from 'aws-sdk/lib/service';
-import CreateCustomerCommand from '../../domain/customer/command/CreateCustomerCommand';
-import { Customer } from '../../domain/customer/model/Customer';
-import { CustomerRepository } from '../../domain/customer/service/CustomerRepository';
 import { v4 as uuidv4 } from 'uuid';
+import { BarcodeRepository } from '../../domain/barcode/service/BarcodeRepository';
+import CreateBarcodeCommand from '../../domain/barcode/command/CreateBarcodeCommand';
+import { Barcode } from '../../domain/barcode/model/Barcode';
 
 const serviceLocalConfigOptions: ServiceConfigurationOptions = {
     region: 'ap-northeast-2',
@@ -23,51 +23,53 @@ if (process.env.AWS_SAM_LOCAL) {
 }
 
 const dynamoDbClient = new AWS.DynamoDB.DocumentClient()
-const CouponTable = String(process.env.CouponTable)
+// const CouponTable = String(process.env.CouponTable)
 
-class CouponDDBRepository implements CustomerRepository {
-    private static instance: CouponDDBRepository;
+class BarcodeDDBRepository implements BarcodeRepository {
+    private static instance: BarcodeDDBRepository;
 
     private constructor() {
-        CouponDDBRepository.instance = this;
+        BarcodeDDBRepository.instance = this;
     }
 
     static get getInstance() {
-        if (!CouponDDBRepository.instance) {
-            CouponDDBRepository.instance = new CouponDDBRepository();
+        if (!BarcodeDDBRepository.instance) {
+            BarcodeDDBRepository.instance = new BarcodeDDBRepository();
         }
         return this.instance;
     }
 
-    async selectCustomerInfo(customerId: string): Promise<Customer> {
-        const param: any = {
+    async selectBarcodeInfo(customerId: string): Promise<Barcode> {
+        const param = {
             TableName: "CustomerTable",
             Key: {
                 customerId: customerId,
-                SK: 'nickName'
+                SK: 'barcode'
             }
         }
 
         const result = await dynamoDbClient.get(param).promise();
-        return result.Item as Customer;
+        return result.Item as Barcode;
     }
 
-    async createCustomer(createCustomerCommand: CreateCustomerCommand): Promise<Customer> {
-        const customerId = uuidv4();
+    async createBarcode(createCustomerCommand: CreateBarcodeCommand): Promise<Barcode> {
+
+        const barcode:string = uuidv4();
+
         const param = {
             TableName: 'CustomerTable',
             Item: {
-                customerId: customerId,
-                SK: 'nickName',
-                nickName: createCustomerCommand.nickName
+                customerId: createCustomerCommand.customerId,
+                SK: 'barcode',
+                barcode: barcode
             }
         }
 
         const result = await dynamoDbClient.put(param).promise();
         
         return Promise.resolve({
-            customerId: customerId,
-            nickName: createCustomerCommand.nickName
+            customerId: createCustomerCommand.customerId,
+            barcode: barcode
         });
     }
 
@@ -200,4 +202,4 @@ class CouponDDBRepository implements CustomerRepository {
     // }
 }
 
-export default CouponDDBRepository;
+export default BarcodeDDBRepository;
