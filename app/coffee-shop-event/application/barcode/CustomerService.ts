@@ -3,6 +3,7 @@ import DeleteBarcodeCommand from "../../domain/barcode/command/DeleteBarcodeComm
 import { Barcode } from "../../domain/barcode/model/Barcode";
 import { BarcodeRepository } from "../../domain/barcode/service/BarcodeRepository";
 import BarcodeDDBRepository from "../../infra/barcode/BarcodeDDBRepository";
+import NotFoundCustomerException from "../../exceptions/NotFoundCustomerException";
 
 export class BarcodeService {
     private static instance: BarcodeService;
@@ -21,7 +22,7 @@ export class BarcodeService {
 
     async getBarcodeInfo(customerId: string|undefined): Promise<Barcode> {
         if( customerId === undefined) {
-            return new Barcode("Empty", "Empty");
+            throw new NotFoundCustomerException(NotFoundCustomerException.NOT_FOUND_CUSTOMER);
         } else {
             const barcode:Barcode = await this.barcodeRepository.selectBarcodeInfo(customerId);
             return barcode;
