@@ -2,6 +2,7 @@ import CreateCustomerCommand from "../../domain/customer/command/CreateCustomerC
 import {Customer} from "../../domain/customer/model/Customer";
 import {CustomerRepository} from "../../domain/customer/service/CustomerRepository";
 import CustomerDDBRepository from "../../infra/customer/CustomerDDBRepository";
+import NotFoundCustomerException from "../../exceptions/NotFoundCustomerException";
 
 export class CustomerService {
 
@@ -21,7 +22,9 @@ export class CustomerService {
 
     async getCustomerInfo(customerId: string | undefined): Promise<Customer> {
         const customer: Customer = await this.customerRepository.selectCustomerInfo(customerId!);
-        console.log("Customer :", JSON.stringify(customer));
+        if( customer === undefined) {
+            throw new NotFoundCustomerException(NotFoundCustomerException.NOT_FOUND_CUSTOMER);
+        }
         return customer;
     }
 

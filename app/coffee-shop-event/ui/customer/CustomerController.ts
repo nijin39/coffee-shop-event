@@ -2,6 +2,7 @@ import { ProxyIntegrationEvent } from "aws-lambda-router/lib/proxyIntegration";
 import { CustomerService } from "../../application/customer/CustomerService";
 import CreateCustomerCommand from "../../domain/customer/command/CreateCustomerCommand";
 import LambdaResponse from "../../util/LambdaResponse";
+import NotFoundCustomerException from "../../exceptions/NotFoundCustomerException";
 
 export class CustomerController {
 
@@ -24,8 +25,12 @@ export class CustomerController {
             .then(customer => {
                 return new LambdaResponse(200, "GetItem", JSON.stringify(customer));
             }).catch(error => {
-                console.log(error);
-                return new LambdaResponse(500, "GetItem", JSON.stringify(error));
+                if( error instanceof NotFoundCustomerException) {
+                    return new LambdaResponse(400, "GetItem", JSON.stringify(error));
+                } else {
+                    return new LambdaResponse(500, "GetItem", JSON.stringify(error));
+                }
+
             });
         return result;
     }
