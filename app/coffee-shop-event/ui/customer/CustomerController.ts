@@ -1,5 +1,5 @@
-import { ProxyIntegrationEvent } from "aws-lambda-router/lib/proxyIntegration";
-import { CustomerService } from "../../application/customer/CustomerService";
+import {ProxyIntegrationEvent} from "aws-lambda-router/lib/proxyIntegration";
+import {CustomerService} from "../../application/customer/CustomerService";
 import CreateCustomerCommand from "../../domain/customer/command/CreateCustomerCommand";
 import LambdaResponse from "../../util/LambdaResponse";
 import NotFoundCustomerException from "../../exceptions/NotFoundCustomerException";
@@ -18,14 +18,14 @@ export class CustomerController {
             CustomerController.instance = new CustomerController();
         }
         return this.instance;
-      }
+    }
 
     async getCustomerInfo(customerId: string | undefined): Promise<LambdaResponse> {
         const result = await this.customerService.getCustomerInfo(customerId)
             .then(customer => {
                 return new LambdaResponse(200, "GetItem", JSON.stringify(customer));
             }).catch(error => {
-                if( error instanceof NotFoundCustomerException) {
+                if (error instanceof NotFoundCustomerException) {
                     return new LambdaResponse(400, "GetItem", JSON.stringify(error));
                 } else {
                     return new LambdaResponse(500, "GetItem", JSON.stringify(error));
@@ -47,15 +47,15 @@ export class CustomerController {
     }
 
     async createCustomerInfo(request: ProxyIntegrationEvent<CreateCustomerCommand>): Promise<LambdaResponse> {
-        const createCustomerCommand:CreateCustomerCommand = request.body;
+        const createCustomerCommand: CreateCustomerCommand = request.body;
         const result = await this.customerService.createCustomer(createCustomerCommand)
-        .then(customer => {
-            return new LambdaResponse(200, "GetItem", JSON.stringify(customer));
-        }).catch(error => {
-            console.log(error);
-            return new LambdaResponse(500, "GetItem", JSON.stringify(error));
-        });
+            .then(customer => {
+                return new LambdaResponse(200, "GetItem", JSON.stringify(customer));
+            }).catch(error => {
+                console.log(error);
+                return new LambdaResponse(500, "GetItem", JSON.stringify(error));
+            });
 
-    return result;
+        return result;
     }
 }

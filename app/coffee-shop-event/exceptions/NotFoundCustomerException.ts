@@ -5,7 +5,7 @@ class NotFoundCustomerException extends Error {
 
     constructor(public message: string) {
         super(message);
-        this.name = "NotFoundCustomer";
+        this.name = "NotFoundCustomerException";
         this.stack = (<any> new Error()).stack;
     }
 }
