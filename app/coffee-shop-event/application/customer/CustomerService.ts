@@ -21,6 +21,7 @@ export class CustomerService {
 
     async getCustomerInfo(customerId: string | undefined): Promise<Customer> {
         const customer: Customer = await this.customerRepository.selectCustomerInfo(customerId!);
+        console.log("Customer :", JSON.stringify(customer));
         return customer;
     }
 
