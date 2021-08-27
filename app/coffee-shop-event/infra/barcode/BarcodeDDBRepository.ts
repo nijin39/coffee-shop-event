@@ -8,9 +8,7 @@ import DeleteBarcodeCommand from '../../domain/barcode/command/DeleteBarcodeComm
 
 const serviceLocalConfigOptions: ServiceConfigurationOptions = {
     region: 'ap-northeast-2',
-    endpoint: 'http://dynamodb-local:8000',
-    accessKeyId: 'q1wgd',
-    secretAccessKey: 'jzya5'
+    endpoint: 'http://dynamodb-local:8000'
 };
 
 const serviceConfigOptions: ServiceConfigurationOptions = {
@@ -63,6 +61,7 @@ class BarcodeDDBRepository implements BarcodeRepository {
                 customerId: createCustomerCommand.customerId,
                 SK: 'barcode',
                 barcode: barcode,
+                barcodeStatue: 'valid',
                 timestamp: Date.now()
             }
         }
@@ -71,7 +70,8 @@ class BarcodeDDBRepository implements BarcodeRepository {
         
         return Promise.resolve({
             customerId: createCustomerCommand.customerId,
-            barcode: barcode
+            barcode: barcode,
+            barcodeStatus: 'valid'
         });
     }
 
@@ -89,6 +89,10 @@ class BarcodeDDBRepository implements BarcodeRepository {
 
         const result = await dynamoDbClient.delete(param).promise();
         return barcode;
+    }
+
+    save(barcode: Barcode): Promise<Barcode> {
+        return Promise.resolve(barcode);
     }
 
     // async registeredCoupon(couponTargetInfo: CouponTarget, couponInfo: CouponInfo): Promise<CouponInfo> {

@@ -9,6 +9,8 @@ export class Customer {
     nickName: string;
     missionProductCount: number;
     normalProductCount: number;
+    promotionId: string;
+    changeCardShowYN:boolean;
 
     constructor(createCustomerCommand: CreateCustomerCommand) {
         this.customerId = uuidv4();

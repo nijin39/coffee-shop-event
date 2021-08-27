@@ -6,4 +6,5 @@ export interface BarcodeRepository {
     deleteBarcode(deleteBarcodeCommand: DeleteBarcodeCommand): Promise<Barcode>
     createBarcode(createBarcodeCommand: CreateBarcodeCommand): Promise<Barcode>
     selectBarcodeInfo(customerId: string): Promise<Barcode>
+    save(barcode:Barcode): Promise<Barcode>
 }

@@ -5,6 +5,7 @@ import {StickerHistory} from "../../domain/sticker/model/StickerHistory";
 import CustomerDDBRepository from "../../infra/customer/CustomerDDBRepository";
 import { CustomerSummaryUpdater } from "../../domain/customer/service/CustomSummaryUpdater";
 import CustomerSummaryDDBUpdater from "../../infra/customer/CustomerSummaryDDBUpdater";
+import {StickerPresentCommand} from "../../domain/sticker/command/StickerPresentCommand";
 
 export class StickerService {
 
@@ -41,4 +42,11 @@ export class StickerService {
         }
 
     }
+
+    // async stickerPresent(stickerPresentCommand: StickerPresentCommand):Promise<StickerHistory> {
+    //     // 01. substract summary
+    //     // 02. add summary
+    //     // 03. history recode
+    //     return new StickerHistory();
+    // }
 }

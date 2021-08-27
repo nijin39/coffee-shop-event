@@ -5,9 +5,7 @@ import { CustomerRepository } from '../../domain/customer/service/CustomerReposi
 
 const serviceLocalConfigOptions: ServiceConfigurationOptions = {
     region: 'ap-northeast-2',
-    endpoint: 'http://dynamodb-local:8000',
-    accessKeyId: 'q1wgd',
-    secretAccessKey: 'jzya5'
+    endpoint: 'http://dynamodb-local:8000'
 };
 
 const serviceConfigOptions: ServiceConfigurationOptions = {

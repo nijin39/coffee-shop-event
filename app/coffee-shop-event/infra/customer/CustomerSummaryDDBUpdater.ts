@@ -9,9 +9,7 @@ import UpdateItemInput = DocumentClient.UpdateItemInput;
 
 const serviceLocalConfigOptions: ServiceConfigurationOptions = {
     region: 'ap-northeast-2',
-    endpoint: 'http://dynamodb-local:8000',
-    accessKeyId: 'q1wgd',
-    secretAccessKey: 'jzya5'
+    endpoint: 'http://dynamodb-local:8000'
 };
 
 const serviceConfigOptions: ServiceConfigurationOptions = {
@@ -44,7 +42,7 @@ class CustomerSummaryDDBUpdater implements CustomerSummaryUpdater {
     addSummary(stickerAddCommand: StickerAddCommand) {
         let param:UpdateItemInput;
 
-        if( stickerAddCommand.productionType === "mission"){
+        if( stickerAddCommand.productionType === "mission" ){
             param = {
                 TableName: CustomerTable,
                 Key: {

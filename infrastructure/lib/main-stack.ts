@@ -39,7 +39,11 @@ export class CdkBackendStack extends Stack {
           sortKey: { name: 'SK', type: dynamodb.AttributeType.STRING }
         });
 
-        lambdaFunction.addEnvironment('CUSTOMER_TABLE', customerTable.tableName);
+        const metaInfoTable = new dynamodb.Table(this, 'MetaInfoTable', {
+          tableName: 'MetaInfoTable-' + props.UserBranch,
+          partitionKey: { name: 'PK', type: dynamodb.AttributeType.STRING },
+          sortKey: { name: 'SK', type: dynamodb.AttributeType.STRING }
+        });
 
         // Order Queue Handler Lambda Function
         const orderLambdaFunction = new lambda.Function(this, 'OrderHandler', {
@@ -47,9 +51,6 @@ export class CdkBackendStack extends Stack {
           handler: 'app/coffee-shop-event/orderQueue.handler',
           code: lambda.Code.fromAsset(path.join("../app/coffee-shop-event/")),
         });
-
-        orderLambdaFunction.addEnvironment('STICKER_HISTORY_TABLE', stickerHistoryTable.tableName);
-        orderLambdaFunction.addEnvironment('CUSTOMER_TABLE', customerTable.tableName);
 
         // Order Queue
         const queue = new sqs.Queue(this, 'OrderQueue', {
@@ -64,8 +65,14 @@ export class CdkBackendStack extends Stack {
         orderLambdaFunction.addEventSource(new SqsEventSource(queue));
 
         orderLambdaFunction.addEnvironment('ORDER_QUEUE', queue.queueArn);
+        orderLambdaFunction.addEnvironment( 'META_TABLE', metaInfoTable.tableName);
+        lambdaFunction.addEnvironment('CUSTOMER_TABLE', customerTable.tableName);
+        orderLambdaFunction.addEnvironment('STICKER_HISTORY_TABLE', stickerHistoryTable.tableName);
+        orderLambdaFunction.addEnvironment('CUSTOMER_TABLE', customerTable.tableName);
 
         // Grant
+        metaInfoTable.grantReadWriteData(lambdaFunction);
+        metaInfoTable.grantReadWriteData(orderLambdaFunction);
         customerTable.grantReadWriteData(lambdaFunction);
         customerTable.grantReadWriteData(orderLambdaFunction);
         stickerHistoryTable.grantReadWriteData(orderLambdaFunction);

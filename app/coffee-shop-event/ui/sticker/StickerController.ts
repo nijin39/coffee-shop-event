@@ -1,6 +1,8 @@
 import { StickerAddCommand } from "../../domain/sticker/command/StickerAddCommand";
 import {StickerService} from "../../application/sticker/StickerService";
 import {StickerHistory} from "../../domain/sticker/model/StickerHistory";
+import {Customer} from "../../domain/customer/model/Customer";
+import {StickerPresentCommand} from "../../domain/sticker/command/StickerPresentCommand";
 
 export class StickerController {
 
@@ -21,5 +23,9 @@ export class StickerController {
     async addStickerHistory(message: StickerAddCommand):Promise<StickerHistory> {
         return await this.stickerService.addStickerHistory(message);
     }
+
+    // async stickerPresent(message: StickerPresentCommand):Promise<Customer> {
+    //     return await this.stickerService.stickerPresent(message);
+    // }
 
 }
