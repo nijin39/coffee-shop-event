@@ -1,14 +1,18 @@
 import * as AWS from 'aws-sdk';
-import { ServiceConfigurationOptions } from 'aws-sdk/lib/service';
 import { v4 as uuidv4 } from 'uuid';
-import { BarcodeRepository } from '../../domain/barcode/service/BarcodeRepository';
+import 'dotenv/config'
+
 import CreateBarcodeCommand from '../../domain/barcode/command/CreateBarcodeCommand';
+import { ServiceConfigurationOptions } from 'aws-sdk/lib/service';
+import { BarcodeRepository } from '../../domain/barcode/service/BarcodeRepository';
 import { Barcode } from '../../domain/barcode/model/Barcode';
 import DeleteBarcodeCommand from '../../domain/barcode/command/DeleteBarcodeCommand';
 
 const serviceLocalConfigOptions: ServiceConfigurationOptions = {
     region: 'ap-northeast-2',
-    endpoint: 'http://dynamodb-local:8000'
+    endpoint: 'http://dynamodb-local:8000',
+    accessKeyId: String(process.env.LOCAL_DYNAMODB_ACCESS_KEY_ID),
+    secretAccessKey: String(process.env.LOCAL_DYNAMODB_SECRET_ACESS_KEY)
 };
 
 const serviceConfigOptions: ServiceConfigurationOptions = {

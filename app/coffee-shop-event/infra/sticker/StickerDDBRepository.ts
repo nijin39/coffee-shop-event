@@ -8,8 +8,8 @@ import {StickerHistory} from "../../domain/sticker/model/StickerHistory";
 const serviceLocalConfigOptions: ServiceConfigurationOptions = {
     region: 'ap-northeast-2',
     endpoint: 'http://dynamodb-local:8000',
-    accessKeyId: 'q1wgd',
-    secretAccessKey: 'jzya5'
+    accessKeyId: String(process.env.LOCAL_DYNAMODB_ACCESS_KEY_ID),
+    secretAccessKey: String(process.env.LOCAL_DYNAMODB_SECRET_ACESS_KEY)
 };
 
 const serviceConfigOptions: ServiceConfigurationOptions = {
